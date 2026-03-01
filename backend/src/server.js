@@ -26,14 +26,23 @@ app.post("/register", async (req, res) => {
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
 
+  console.log("EMAIL RECEBIDO:", email);
+  console.log("PASSWORD RECEBIDO:", password);
+
   db.get(
     "SELECT * FROM users WHERE email = ?",
     [email],
     async (err, user) => {
-      if (!user) return res.status(400).json({ message: "Usuário não encontrado" });
+      console.log("USUARIO DO BANCO:", user);
+
+      if (!user)
+        return res.status(400).json({ message: "Usuário não encontrado" });
 
       const valid = await bcrypt.compare(password, user.password);
-      if (!valid) return res.status(400).json({ message: "Senha inválida" });
+      console.log("COMPARE RESULT:", valid);
+
+      if (!valid)
+        return res.status(400).json({ message: "Senha inválida" });
 
       const token = jwt.sign({ id: user.id }, "secret_key", {
         expiresIn: "1d",
