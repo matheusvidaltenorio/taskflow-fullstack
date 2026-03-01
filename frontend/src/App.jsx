@@ -4,7 +4,7 @@ import "./styles.css";
 import Loader from "./components/Loader";     
 import Toast from "./components/Toast";
 
-const API = "http://localhost:3000";
+const API = "https://taskflow-backend-l2s0.onrender.com";
 
 function App() {
   const [email, setEmail] = useState("");
